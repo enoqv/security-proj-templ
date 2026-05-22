@@ -58,6 +58,11 @@ jobs:
         with:
           app-id: ${{ vars.RENOVATE_APP_ID }}
           private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
+          # owner + repositories are technically optional (defaults to the
+          # current owner + current repo), but spelling them out makes the
+          # scope of the minted token unambiguous in the run log.
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
 
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -72,3 +77,9 @@ jobs:
           RENOVATE_DRY_RUN: ${{ inputs.dryRun && 'full' || '' }}
           # Scope Renovate to this repository only.
           RENOVATE_REPOSITORIES: ${{ github.repository }}
+          # Use the GitHub API for commits instead of `git push`. The API
+          # path makes GitHub auto GPG-sign the commits on the App's behalf,
+          # which is required so Renovate PRs satisfy the "Require signed
+          # commits" branch protection rule documented in
+          # docs/branch-protection.md.
+          RENOVATE_PLATFORM_COMMIT: "true"

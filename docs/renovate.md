@@ -20,7 +20,8 @@ the App's private key — no long-lived PAT.
    - **Homepage URL**: link to this repo
    - **Webhook → Active**: **uncheck**. We don't process webhooks.
 
-2. **Repository permissions**:
+2. **Repository permissions** (matches the upstream
+   `renovatebot/github-action` README):
 
    | Permission | Access | Reason |
    |---|---|---|
@@ -29,7 +30,13 @@ the App's private key — no long-lived PAT.
    | Workflows | Read & write | Edit `.github/workflows/*.yml`; `GITHUB_TOKEN` cannot. |
    | Issues | Read & write | Maintain the Dependency Dashboard issue (otherwise runs log `Could not ensure issue ... 403`). |
    | Commit statuses | Read & write | Set the `renovate/stability-days` status that tracks `minimumReleaseAge` (otherwise runs abort with a misleading "Repository has changed during renovation" error). |
+   | Checks | Read & write | Read failing check runs to decide rebases and post Renovate's own check runs. |
+   | Administration | Read | Read branch-protection rules so Renovate respects them and surfaces them in PRs. |
+   | Members | Read | Resolve organization reviewer / assignee references. |
    | Metadata | Read | Required for any App; granted automatically. |
+
+   **Organization permissions**: leave all at **No access** (this App is
+   installed on a single repo, not the org).
 
    All other permissions: leave at **No access**.
 
