@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.22
+# syntax=docker/dockerfile:1.24@sha256:87999aa3d42bdc6bea60565083ee17e86d1f3339802f543c0d03998580f9cb89
 # Modeled on https://github.com/anthropics/claude-code/blob/main/.devcontainer/Dockerfile
 # but rebased on debian:bookworm-slim — Claude Code now ships as a native
 # binary (https://code.claude.com/docs/en/installation), so the Node.js
